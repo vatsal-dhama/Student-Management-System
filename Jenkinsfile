@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     sh 'docker-compose -f docker-compose.yml build',
-                    sh 'docker-compose -f docker-compose.yml push',
+                    sh 'docker-compose -f docker-compose.yml push'
                 }
             }
         }
