@@ -12,8 +12,10 @@ pipeline {
 
         stage('Pushing docker images using Docker') {
             steps {
-                sh 'docker-compose -f docker-compose.yml build',
-                sh 'docker-compose -f docker-compose.yml push'
+                sh '''
+                    docker-compose -f docker-compose.yml build
+                    docker-compose -f docker-compose.yml push
+                '''
             }
         }
     }
