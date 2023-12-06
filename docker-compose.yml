@@ -1,5 +1,6 @@
 services:
   database:
+    image: shubhanshu1902/spe_database
     build: ./Database
     container_name: database
     restart: always
@@ -9,6 +10,7 @@ services:
       - spring_net
 
   backend: 
+    image: shubhanshu1902/spe_backend
     depends_on:
       - database
     build: ./backend
@@ -22,6 +24,7 @@ services:
       - frontend_net
     
   frontend:
+    image: shubhanshu1902/spe_frontend
     build: ./frontend
     ports:
       - 3000:3000

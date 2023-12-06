@@ -1,11 +1,6 @@
 pipeline {
     agent any
     
-    environment {
-        registry = 'shubhanshu1902/spe_major_project'
-        registryCredential = 'dockerhubconnect'
-        dockerImage = ''
-    }
 
     stages{
         stage('Pull GitHub Repository') {
@@ -15,10 +10,11 @@ pipeline {
             }
         }
 
-        stage('Creating Image using Docker') {
+        stage('Pushing docker images using Docker') {
             steps {
                 script {
-                    dockerImage = "docker build ./Database"
+                    sh 'docker-compose -f docker-compose.yml build',
+                    sh 'docker-compose -f docker-compose.yml push',
                 }
             }
         }
