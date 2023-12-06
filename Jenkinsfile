@@ -10,6 +10,15 @@ pipeline {
             }
         }
 
+        stage('login in docker hub') {
+            steps {
+                script{
+                    withCredentials([usernamePassword(credentialsId: 'dockerhubconnect', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        sh 'docker login -u ' +USERNAME +' -p ' +PASSWORD
+                    }
+                }
+            }
+        }
         stage('Pushing docker images using Docker') {
             steps {
                 sh '''
