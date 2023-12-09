@@ -2,8 +2,8 @@ pipeline {
     agent any
     environment {
         backend = 'shubhanshu1902/spe_backend' // Specify your backend Docker image name/tag
-        frontend = 'shubhanshu1902/spe_backend' // Specify your frontend Docker image name/tag
-        mysqlImage = 'shubhanshu1902/spe_frontend' // Specify the MySQL Docker image
+        frontend = 'shubhanshu1902/spe_frontend' // Specify your frontend Docker image name/tag
+        mysqlImage = 'shubhanshu1902/spe_database' // Specify the MySQL Docker image
         mysql = 'mysql:8'
         MYSQL_PORT = '3306'
         docker_image = ''
@@ -58,12 +58,34 @@ pipeline {
             }
         }
 
-        stage('Stage 5: Push backend Docker image to DockerHub') {
+        stage('Stage 5: Push Database Docker image to DockerHub') {
             steps {
                 echo 'Pushing backend Docker image to DockerHub'
                 script {
-                    docker.withRegistry('', 'DockerHubCred') {
-                        sh 'docker push ak232003/backend'
+                    docker.withRegistry('', 'dockerhubconnect') {
+                        sh 'docker push shubhanshu1902/spe_database'
+                    }
+                }
+            }
+        }
+
+        stage('Stage 6: Push backend Docker image to DockerHub') {
+            steps {
+                echo 'Pushing backend Docker image to DockerHub'
+                script {
+                    docker.withRegistry('', 'dockerhubconnect') {
+                        sh 'docker push shubhanshu1902/spe_backend'
+                    }
+                }
+            }
+        }
+
+        stage('Stage 7: Push frontend Docker image to DockerHub') {
+            steps {
+                echo 'Pushing backend Docker image to DockerHub'
+                script {
+                    docker.withRegistry('', 'dockerhubconnect') {
+                        sh 'docker push shubhanshu1902/spe_frontend'
                     }
                 }
             }
