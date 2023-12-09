@@ -94,7 +94,7 @@ pipeline {
         stage('Stage 8: Clean docker images') {
             steps {
                 script {
-                    sh 'docker rmi mysql'
+                    sh 'docker rmi $mysql'
                     sh 'docker rmi $database'
                     sh 'docker rmi $backend'
                     sh 'docker rmi $frontend' 
