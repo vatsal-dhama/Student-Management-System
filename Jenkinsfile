@@ -14,7 +14,7 @@ pipeline {
             steps {
                 echo 'Pulling MySQL image from DockerHub'
                 script {
-                    docker.withRegistry('', 'DockerHubCred') {
+                    docker.withRegistry('', 'dockerhubconnect') {
                         docker.image("${mysql}").pull()
                     }
                 }
