@@ -9,6 +9,10 @@ services:
     networks:
       - spring_net
 
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+
   backend: 
     image: shubhanshu1902/spe_backend
     depends_on:
@@ -23,6 +27,7 @@ services:
       - spring_net
       - frontend_net
     
+    
   frontend:
     image: shubhanshu1902/spe_frontend
     build: ./frontend
@@ -34,3 +39,6 @@ services:
 networks:
   spring_net:
   frontend_net:
+
+volumes:
+  mysql-data:
