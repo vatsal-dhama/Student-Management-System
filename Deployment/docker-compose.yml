@@ -1,6 +1,7 @@
 services:
   database:
     image: shubhanshu1902/spe_database
+    # build: ./Database
     container_name: database
     restart: always
     ports:
@@ -16,6 +17,7 @@ services:
     image: shubhanshu1902/spe_backend
     depends_on:
       - database
+    # build: ./backend
     restart: on-failure
     ports:
       - "8070:8070"
@@ -28,6 +30,7 @@ services:
     
   frontend:
     image: shubhanshu1902/spe_frontend
+    # build: ./frontend
     ports:
       - 3000:3000
     networks:

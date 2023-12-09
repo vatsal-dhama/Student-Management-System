@@ -102,24 +102,19 @@ pipeline {
             }
         }
 
-        // stage('login in docker hub') {
-        //     steps {
-        //         script{
-        //             withCredentials([usernamePassword(credentialsId: 'dockerhubconnect', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-        //                 sh 'docker login -u ' +USERNAME +' -p ' +PASSWORD
-        //             }
-        //         }
-        //     }
-        // }
-        // stage('Pushing docker images using Docker') {
-        //     steps {
-        //         sh '''
-        //             docker --version
-        //             docker-compose --version
-        //             docker-compose -f docker-compose.yml build
-        //             docker-compose -f docker-compose.yml push
-        //         '''
-        //     }
-        // }
+        stage('Stage 9: Ansible Deployment') {
+            steps {
+                ansiblePlaybook(
+                    becomeUser: null,
+                    colorized: true,
+                    credentialsId: 'localhost',
+                    disableHostKeyChecking: true,
+                    installation: 'Ansible',
+                    inventory: 'Deployment/inventory',
+                    playbook: 'Deployment/deploy.yml',
+                    sudoUser: null
+                )
+            }
+        }
     }
 }
