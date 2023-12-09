@@ -91,6 +91,14 @@ pipeline {
             }
         }
         
+        stage('Stage 8: Clean docker images') {
+            steps {
+                script {
+                    sh 'docker container prune -f'
+                    sh 'docker image prune -f'
+                }
+            }
+        }
 
         // stage('login in docker hub') {
         //     steps {
