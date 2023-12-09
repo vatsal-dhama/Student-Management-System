@@ -3,7 +3,7 @@ pipeline {
     environment {
         backend = 'shubhanshu1902/spe_backend' // Specify your backend Docker image name/tag
         frontend = 'shubhanshu1902/spe_frontend' // Specify your frontend Docker image name/tag
-        mysqlImage = 'shubhanshu1902/spe_database' // Specify the MySQL Docker image
+        database = 'shubhanshu1902/spe_database' // Specify the MySQL Docker image
         mysql = 'mysql:8'
         MYSQL_PORT = '3306'
         docker_image = ''
@@ -33,7 +33,7 @@ pipeline {
                 echo 'Building backend Docker image'
                 dir('Database')
                 {
-                    sh "docker build -t shubhanshu1902/spe_database ."
+                    sh "docker build -t $database ."
                 }
             }
         }
@@ -43,7 +43,7 @@ pipeline {
                 echo 'Building backend Docker image'
                 dir('backend')
                 {
-                    sh "docker build -t shubhanshu1902/spe_backend ."
+                    sh "docker build -t $backend ."
                 }
             }
         }
@@ -53,7 +53,7 @@ pipeline {
                 echo 'Building frontend Docker image'
                 dir('frontend') {
                     echo 'Changing to frontend directory'
-                    sh "docker build -t shubhanshu1902/spe_frontend ."
+                    sh "docker build -t $frontend ."
                 }
             }
         }
@@ -63,7 +63,7 @@ pipeline {
                 echo 'Pushing backend Docker image to DockerHub'
                 script {
                     docker.withRegistry('', 'dockerhubconnect') {
-                        sh 'docker push shubhanshu1902/spe_database'
+                        sh 'docker push $database'
                     }
                 }
             }
@@ -74,7 +74,7 @@ pipeline {
                 echo 'Pushing backend Docker image to DockerHub'
                 script {
                     docker.withRegistry('', 'dockerhubconnect') {
-                        sh 'docker push shubhanshu1902/spe_backend'
+                        sh 'docker push $backend'
                     }
                 }
             }
@@ -85,7 +85,7 @@ pipeline {
                 echo 'Pushing backend Docker image to DockerHub'
                 script {
                     docker.withRegistry('', 'dockerhubconnect') {
-                        sh 'docker push shubhanshu1902/spe_frontend'
+                        sh 'docker push $frontend'
                     }
                 }
             }
@@ -94,9 +94,9 @@ pipeline {
         stage('Stage 8: Clean docker images') {
             steps {
                 script {
-                    sh 'docker container prune -f'
-                    sh 'docker image prune -f'
-                    sh 'docker system prune -a'
+                    sh 'docker rmi $database'
+                    sh 'docker rmi $backend'
+                    sh 'docker rmi $frontend' 
                 }
             }
         }
