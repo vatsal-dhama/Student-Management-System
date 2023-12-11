@@ -11,10 +11,10 @@
 	<groupId>esd.academia</groupId>
 	<artifactId>academiaa</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>academiaa</name>
+	<name>academia</name>
 	<description>Academia Project for Spring Boot</description>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

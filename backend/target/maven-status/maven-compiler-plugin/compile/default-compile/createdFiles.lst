@@ -6,8 +6,8 @@ esd/academia/controller/FacultyController.class
 esd/academia/repository/BatchRepository.class
 esd/academia/service/StudentService.class
 esd/academiaa/dto/StudentDTO.class
-esd/academia/repository/CourseRepository.class
 esd/academia/controller/CourseController.class
+esd/academia/repository/CourseRepository.class
 esd/academia/model/Course.class
 esd/academia/repository/FacultyRepository.class
 esd/academia/model/Specialization.class
@@ -17,8 +17,8 @@ esd/academiaa/dto/FacultyDTO.class
 esd/academia/repository/SpecializationRepository.class
 esd/academia/service/SpecializationService.class
 esd/academia/service/impl/CourseServiceImpl.class
-esd/academia/controller/UtilController.class
 esd/academia/model/Batch.class
+esd/academia/controller/UtilController.class
 esd/academia/service/CourseService.class
 esd/academia/repository/StudentRepository.class
 esd/academia/service/BatchService.class
