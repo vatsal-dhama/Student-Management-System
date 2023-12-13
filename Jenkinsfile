@@ -36,11 +36,6 @@ pipeline {
 
         stage('Stage 2: Build Database Docker Image') {
             steps {
-                //docker cleanup
-                script{
-                    sh 'docker stop $(docker ps -a -q)'
-                    sh 'docker system prune -a'
-                }
                 echo 'Building backend Docker image'
                 dir('Database')
                 {
