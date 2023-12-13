@@ -17,7 +17,12 @@ pipeline {
 
     stages{
         stage('Prepare') {
-            sh "npm install -g yarn"
+            steps{
+                script{
+                    sh "npm install -g yarn"
+                }
+            }
+            
         }
         stage('Stage 0: Pull MySQL Image') {
             steps {
