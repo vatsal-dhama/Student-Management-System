@@ -14,7 +14,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name="faculty")
 public class Faculty {
