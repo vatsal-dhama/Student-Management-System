@@ -20,6 +20,8 @@ pipeline {
             steps {
                 echo 'Pulling MySQL image from DockerHub'
                 script {
+                    sh 'whereis yarn'
+                    sh 'whereis npm'
                     docker.withRegistry('', 'dockerhubconnect') {
                         docker.image("${mysql}").pull()
                     }
