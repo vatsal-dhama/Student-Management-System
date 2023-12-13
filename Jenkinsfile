@@ -13,6 +13,7 @@ pipeline {
     tools { 
         maven 'mvn'
         ansible 'ansible'
+        yarn 'yarn'
     }
 
     stages{
