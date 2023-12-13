@@ -38,7 +38,17 @@ pipeline {
             }
         }
 
-        stage('Stage 3: Build backend Docker Image') {
+        stage('stage 3: Build maven project') {
+            steps {
+                echo 'Build maven project'
+                dir('backend') 
+                {
+                    sh 'mvn clean install'
+                }
+            }
+        }
+ 
+        stage('Stage 4: Build backend Docker Image') {
             steps {
                 echo 'Building backend Docker image'
                 dir('backend')
@@ -48,7 +58,7 @@ pipeline {
             }
         }
 
-        stage('Stage 4: Build frontend Docker image') {
+        stage('Stage 5: Build frontend Docker image') {
             steps {
                 echo 'Building frontend Docker image'
                 dir('frontend') {
@@ -58,7 +68,7 @@ pipeline {
             }
         }
 
-        stage('Stage 5: Push Database Docker image to DockerHub') {
+        stage('Stage 6: Push Database Docker image to DockerHub') {
             steps {
                 echo 'Pushing backend Docker image to DockerHub'
                 script {
@@ -69,7 +79,7 @@ pipeline {
             }
         }
 
-        stage('Stage 6: Push backend Docker image to DockerHub') {
+        stage('Stage 7: Push backend Docker image to DockerHub') {
             steps {
                 echo 'Pushing backend Docker image to DockerHub'
                 script {
@@ -80,7 +90,7 @@ pipeline {
             }
         }
 
-        stage('Stage 7: Push frontend Docker image to DockerHub') {
+        stage('Stage 8: Push frontend Docker image to DockerHub') {
             steps {
                 echo 'Pushing backend Docker image to DockerHub'
                 script {
@@ -91,7 +101,7 @@ pipeline {
             }
         }
         
-        stage('Stage 8: Clean docker images') {
+        stage('Stage 9: Clean docker images') {
             steps {
                 script {
                     sh 'docker rmi $mysql'
@@ -102,7 +112,7 @@ pipeline {
             }
         }
 
-        stage('Stage 9: Ansible Deployment') {
+        stage('Stage 10: Ansible Deployment') {
             steps {
                 ansiblePlaybook(
                     becomeUser: null,

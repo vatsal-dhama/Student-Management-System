@@ -10,7 +10,4 @@ public interface BatchService {
 	List<Batch> saveBatchInBatch(List<Batch> lBatch);
 	
 	List<Batch> getAllBatches();
-	
-	
-
 }
