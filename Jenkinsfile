@@ -13,10 +13,12 @@ pipeline {
     tools { 
         maven 'mvn'
         ansible 'ansible'
-        yarn 'yarn'
     }
 
     stages{
+        stage('Prepare') {
+            sh "npm install -g yarn"
+        }
         stage('Stage 0: Pull MySQL Image') {
             steps {
                 echo 'Pulling MySQL image from DockerHub'
