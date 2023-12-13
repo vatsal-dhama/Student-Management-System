@@ -34,6 +34,7 @@ pipeline {
                 dir('Database')
                 {
                     sh "docker build -t $database ."
+                    sh "docker run -dp 127.0.0.1:3306:3306 $database"
                 }
             }
         }
@@ -54,21 +55,33 @@ pipeline {
                 dir('backend')
                 {
                     sh "docker build -t $backend ."
+                    sh "docker run -dp 127.0.0.1:8070:8070 $backend"
                 }
             }
         }
 
-        stage('Stage 5: Build frontend Docker image') {
+        stage('Stage 5: Testing Frontend') {
+            steps {
+                echo 'Building frontend Docker image'
+                dir('frontend') {
+                    sh "yarn"
+                    sh "yarn start"
+                }
+            }
+        }
+
+        stage('Stage 6: Build frontend Docker image') {
             steps {
                 echo 'Building frontend Docker image'
                 dir('frontend') {
                     echo 'Changing to frontend directory'
                     sh "docker build -t $frontend ."
+                    sh "docker run -dp 127.0.0.1:3000:3000 $frontend"
                 }
             }
         }
 
-        stage('Stage 6: Push Database Docker image to DockerHub') {
+        stage('Stage 7: Push Database Docker image to DockerHub') {
             steps {
                 echo 'Pushing backend Docker image to DockerHub'
                 script {
@@ -79,7 +92,7 @@ pipeline {
             }
         }
 
-        stage('Stage 7: Push backend Docker image to DockerHub') {
+        stage('Stage 8: Push backend Docker image to DockerHub') {
             steps {
                 echo 'Pushing backend Docker image to DockerHub'
                 script {
@@ -90,7 +103,7 @@ pipeline {
             }
         }
 
-        stage('Stage 8: Push frontend Docker image to DockerHub') {
+        stage('Stage 9: Push frontend Docker image to DockerHub') {
             steps {
                 echo 'Pushing backend Docker image to DockerHub'
                 script {
@@ -101,9 +114,10 @@ pipeline {
             }
         }
         
-        stage('Stage 9: Clean docker images') {
+        stage('Stage 10: Clean docker images') {
             steps {
                 script {
+                    sh 'docker stop $(docker ps -a -q)'
                     sh 'docker rmi $mysql'
                     sh 'docker rmi $database'
                     sh 'docker rmi $backend'
@@ -112,7 +126,7 @@ pipeline {
             }
         }
 
-        stage('Stage 10: Ansible Deployment') {
+        stage('Stage 11: Ansible Deployment') {
             steps {
                 ansiblePlaybook(
                     becomeUser: null,
