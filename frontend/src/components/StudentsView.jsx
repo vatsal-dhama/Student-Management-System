@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from 'axios'
 import { useDispatch } from "react-redux";
 import { addCart } from "../redux/action";
 
@@ -11,14 +12,46 @@ const Students = () => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState(data);
   const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    s_batch_code: '',
+    rollnumber: '',
+    firstname: '',
+    lastname: '',
+    email: '',
+    photourl: '',
+    totalcredits: '',
+    graduationYear: ''
+  });
   let componentMounted = true;
 
-//   const dispatch = useDispatch();
+ //   const dispatch = useDispatch();
 
-//   const addStudent = (student) => {
-//     dispatch(addCart(student))
-//   }
 
+
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // You can perform actions with the form data here
+    axios.post("http://localhost:8070/student/add", formData)
+    .then((response)=>{
+      console.log(response)
+    })
+    console.log('Form submitted:', formData);
+    
+  };
+
+
+  //For fetching students
   useEffect(() => {
     const getStudents = async () => {
       setLoading(true);
@@ -80,6 +113,8 @@ const Students = () => {
       </>
     );
   };
+
+
   return (
     <>
       <div className="container my-3 py-3">
@@ -89,8 +124,51 @@ const Students = () => {
             <hr />
           </div>
         </div>
+
         <div className="row justify-content-center">
           {<ShowStudents />}
+        </div>
+
+
+        <div>
+          <h2>Add new Student</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="s_batch_code" className="form-label">Batch Code</label>
+              <input type="text" className="form-control" id="s_batch_code" name="s_batch_code" value={formData.s_batch_code} onChange={handleInputChange} />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="rollnumber" className="form-label">Roll Number</label>
+              <input type="text" className="form-control" id="rollnumber" name="rollnumber" value={formData.rollnumber} onChange={handleInputChange} />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="firstname" className="form-label">First Name</label>
+              <input type="text" className="form-control" id="firstname" name="firstname" value={formData.firstname} onChange={handleInputChange} />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="lastname" className="form-label">Last Name</label>
+              <input type="text" className="form-control" id="lastname" name="lastname" value={formData.lastname} onChange={handleInputChange} />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">Email</label>
+              <input type="text" className="form-control" id="email" name="email" value={formData.email} onChange={handleInputChange} />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="photourl" className="form-label">Photo URL</label>
+              <input type="text" className="form-control" id="photourl" name="photourl" value={formData.photourl} onChange={handleInputChange} />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="totalcredits" className="form-label">Total Credits</label>
+              <input type="number" className="form-control" id="totalcredits" name="totalcredits" value={formData.totalcredits} onChange={handleInputChange} />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="graduationYear" className="form-label">Graduation Year</label>
+              <input type="number" className="form-control" id="graduationYear" name="graduationYear" value={formData.graduationYear} onChange={handleInputChange} />
+            </div>
+            <button type="submit" className="btn btn-primary">Submit</button>
+          </form>
+
+
         </div>
       </div>
     </>
@@ -98,3 +176,4 @@ const Students = () => {
 };
 
 export default Students;
+
