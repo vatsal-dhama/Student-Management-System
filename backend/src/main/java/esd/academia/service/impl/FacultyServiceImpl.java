@@ -43,5 +43,5 @@ public class FacultyServiceImpl implements FacultyService {
 		}
 		return retrievedFac;
 	}
-
+	
 }

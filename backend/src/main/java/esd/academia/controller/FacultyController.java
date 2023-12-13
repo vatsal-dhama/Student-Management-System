@@ -89,7 +89,7 @@ public class FacultyController {
 			msg = "Something went wrong - "+e.getMessage();
 			status = HttpStatus.UNPROCESSABLE_ENTITY;
 		}
-		return new ResponseEntity<String>(msg, status);		
+		return new ResponseEntity<String>(msg, HttpStatus.CREATED);		
 	}
 	
 	@PostMapping(path="/addMultiple")
