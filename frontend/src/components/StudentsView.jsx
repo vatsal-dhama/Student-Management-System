@@ -12,6 +12,7 @@ const Students = () => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState(data);
   const [loading, setLoading] = useState(false);
+  const [batchset, setBatchset] = useState(false);
   const [formData, setFormData] = useState({
     s_batch_code: '',
     rollnumber: '',
@@ -26,7 +27,44 @@ const Students = () => {
 
  //   const dispatch = useDispatch();
 
+  const batches = [
+    {
+      degree: 'IMT',
+      year: 2020
+    }, 
+    {
+      degree: 'IMT',
+      year: 2021
+    }, 
+    {
+      degree: 'IMT',
+      year: 2022
+    }, 
+    {
+      "degree": "IMT",
+      "year": 2023
+    },
+    {
+      "degree": "MT",
+      "year": 2020
+    },
+    {
+      "degree": "MT",
+      "year": 2021
+    },
+    {
+      "degree": "MT",
+      "year": 2022
+    },
+    {
+      "degree": "MT",
+      "year": 2023
+    }
+    ];
 
+  // Use a for loop to iterate over the array and create JSX elements
+
+  // axios.post("http://localhost:8070/utils/addBatch", formData)
 
   // Handle form input changes
   const handleInputChange = (e) => {
@@ -41,7 +79,15 @@ const Students = () => {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    // You can perform actions with the form data here
+    if (!batchset) {
+      for (let i = 0; i < batches.length; i++) {
+        axios.post("http://localhost:8070/utils/addBatch", batches[i])
+        console.log("hel");
+      }
+      setBatchset(true);    
+    }
+
+
     axios.post("http://localhost:8070/student/add", formData)
     .then((response)=>{
       console.log(response)
