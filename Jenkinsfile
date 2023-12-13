@@ -9,11 +9,19 @@ pipeline {
         docker_image = ''
     }
 
+    //added tool references for mac
+    tools { 
+        maven 'mvn'
+        ansible 'ansible'
+    }
+
     stages{
         stage('Stage 0: Pull MySQL Image') {
             steps {
                 echo 'Pulling MySQL image from DockerHub'
                 script {
+                    sh 'whereis yarn'
+                    sh 'whereis npm'
                     docker.withRegistry('', 'dockerhubconnect') {
                         docker.image("${mysql}").pull()
                     }
@@ -64,6 +72,7 @@ pipeline {
             steps {
                 echo 'Building frontend Docker image'
                 dir('frontend') {
+                    sh "npm install -g yarn"
                     sh "yarn"
                     sh "yarn start"
                 }
