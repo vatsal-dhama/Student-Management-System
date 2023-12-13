@@ -16,14 +16,6 @@ pipeline {
     }
 
     stages{
-        stage('Prepare') {
-            steps{
-                script{
-                    sh "npm install -g yarn"
-                }
-            }
-            
-        }
         stage('Stage 0: Pull MySQL Image') {
             steps {
                 echo 'Pulling MySQL image from DockerHub'
@@ -78,6 +70,7 @@ pipeline {
             steps {
                 echo 'Building frontend Docker image'
                 dir('frontend') {
+                    sh "npm install -g yarn"
                     sh "yarn"
                     sh "yarn start"
                 }
