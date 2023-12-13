@@ -9,6 +9,11 @@ pipeline {
         docker_image = ''
     }
 
+    tools { 
+        maven 'mvn'
+        ansible 'ansible'
+    }
+
     stages{
         stage('Stage 0: Pull MySQL Image') {
             steps {
