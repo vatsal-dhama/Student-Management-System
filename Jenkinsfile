@@ -128,10 +128,6 @@ pipeline {
             steps {
                 script {
                     sh 'docker stop $(docker ps -a -q)'
-                    sh 'docker rmi $mysql'
-                    sh 'docker rmi $database'
-                    sh 'docker rmi $backend'
-                    sh 'docker rmi $frontend' 
                 }
             }
         }
