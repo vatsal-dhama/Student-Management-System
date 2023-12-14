@@ -47,15 +47,15 @@ pipeline {
             }
         }
 
-        stage('stage 3: Build maven project') {
-            steps {
-                echo 'Build maven project'
-                dir('backend') 
-                {
-                    sh 'mvn clean install'
-                }
-            }
-        }
+        // stage('stage 3: Build maven project') {
+        //     steps {
+        //         echo 'Build maven project'
+        //         dir('backend') 
+        //         {
+        //             sh 'mvn clean install'
+        //         }
+        //     }
+        // }
  
         stage('Stage 4: Build backend Docker Image') {
             steps {
