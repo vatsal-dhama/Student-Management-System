@@ -69,17 +69,6 @@ pipeline {
             }
         }
 
-        // stage('Stage 5: Testing Frontend') {
-        //     steps {
-        //         echo 'Building frontend Docker image'
-        //         dir('frontend') {
-        //             // sh "npm install -g yarn"
-        //             sh "npm install"
-        //             sh "npm test"
-        //         }
-        //     }
-        // }
-
         stage('Stage 6: Build frontend Docker image') {
             steps {
                 echo 'Building frontend Docker image'
