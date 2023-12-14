@@ -9,11 +9,11 @@ pipeline {
         docker_image = ''
     }
 
-    //added tool references for mac
-    tools { 
-        maven 'mvn'
-        ansible 'ansible'
-    }
+    // //added tool references for mac
+    // tools { 
+    //     maven 'mvn'
+    //     ansible 'ansible'
+    // }
 
     stages{
         stage('Stage 0: Pull MySQL Image') {
