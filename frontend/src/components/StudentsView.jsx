@@ -1,17 +1,60 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios'
+import axios from 'axios';
+import Modal from 'react-modal';  // Import the modal library
 import { useDispatch } from "react-redux";
 import { addCart } from "../redux/action";
-
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-
 import { Link } from "react-router-dom";
 
 const Students = () => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState(data);
   const [loading, setLoading] = useState(false);
+  const [batchset, setBatchset] = useState(false);
+
+
+  let componentMounted = true;
+
+ //   const dispatch = useDispatch();
+
+  const batches = [
+    {
+      degree: 'IMT',
+      year: 2020
+    }, 
+    {
+      degree: 'IMT',
+      year: 2021
+    }, 
+    {
+      degree: 'IMT',
+      year: 2022
+    }, 
+    {
+      "degree": "IMT",
+      "year": 2023
+    },
+    {
+      "degree": "MT",
+      "year": 2020
+    },
+    {
+      "degree": "MT",
+      "year": 2021
+    },
+    {
+      "degree": "MT",
+      "year": 2022
+    },
+    {
+      "degree": "MT",
+      "year": 2023
+    }
+    ];
+
+  
+  //Fore new student creation
   const [formData, setFormData] = useState({
     s_batch_code: '',
     rollnumber: '',
@@ -22,13 +65,6 @@ const Students = () => {
     totalcredits: '',
     graduationYear: ''
   });
-  let componentMounted = true;
-
- //   const dispatch = useDispatch();
-
-
-
-  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -36,12 +72,17 @@ const Students = () => {
       [name]: value
     });
   };
-
-
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    // You can perform actions with the form data here
+    if (!batchset) {
+      for (let i = 0; i < batches.length; i++) {
+        axios.post("http://localhost:8070/utils/addBatch", batches[i])
+        console.log("hel");
+      }
+      setBatchset(true);    
+    }
+
+
     axios.post("http://localhost:8070/student/add", formData)
     .then((response)=>{
       console.log(response)
@@ -49,6 +90,32 @@ const Students = () => {
     console.log('Form submitted:', formData);
     
   };
+
+  //For updateing cgpa of students
+  const [editcgpa, seteditcgpa] = useState(
+    0.0
+  );
+  const handlecgpaChange = (e) => {
+    const { name, value } = e.target;
+    seteditcgpa(
+      value
+    );
+  };
+  const handlecgpaSubmit = (student,e) => {
+    e.preventDefault();
+    const payload = {
+      s_batch_code: student.s_batch_code,
+      rollnumber: student.rollnumber,
+      firstname: student.firstname,
+      lastname: student.lastname,
+      email: student.email,
+      photourl: student.photourl,
+      totalcredits: student.totalcredits,
+      graduationYear: student.graduationYear,
+      cgpa: editcgpa
+    }
+    axios.post("http://localhost:8070/student/update", payload)
+  }
 
 
   //For fetching students
@@ -71,6 +138,23 @@ const Students = () => {
     getStudents();
   }, []);
 
+  // State for managing the modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Function to open the modal
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleEditSubmit = () => {
+
+  };
+
   const filterStudent = (batch) => {
     const updatedList = data.filter((item) => item.s_batch_code.batch_id===batch );
     setFilter(updatedList);
@@ -84,6 +168,7 @@ const Students = () => {
           <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterStudent("BT2025")}>
           BT2025
           </button>
+
           <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterStudent("MT2024")}>MT2024</button>
         </div>
 
@@ -103,7 +188,54 @@ const Students = () => {
                     </ul>
                     <div className="card-body">
                         <a href="#" className="card-link">View</a>
-                        <a href="#" className="card-link">Edit</a>
+                        <button className="btn btn-link card-link"  onClick={openModal}>
+                        Edit
+                        </button>
+                        <div>
+
+                          <button onClick={openModal}>Edit</button>
+                          <Modal
+                            isOpen={isModalOpen}
+                            onRequestClose={closeModal}
+                            contentLabel="Edit Student Modal"
+                          >
+
+                            <h2>Edit Student</h2>
+                            <div>
+                              <label>Student ID:</label>
+                              <span>{student.student_id}</span>
+                            </div>
+                            <div>
+                              <label>First Name:</label>
+                              <span>{student.firstname}</span>
+                            </div>
+                            <div>
+                              <label>Email:</label>
+                              <span>{student.email}</span>
+                            </div>
+                            <div>
+                              <label>Roll Number:</label>
+                              <span>{student.rollnumber}</span>
+                            </div>
+                            {/* Add your form or any editing components here */}
+                            <form onSubmit={(e) => handlecgpaSubmit(student, e)}>
+                              <div>
+                                <label htmlFor="cgpa">Cgpa:</label>
+                                <input
+                                  type="number"
+                                  id="cgpa"
+                                  name="cgpa"
+                                  value={formData.cgpa}
+                                  onChange={handlecgpaChange}
+                                />
+                              </div>
+
+                              <button type="submit">Save Changes</button>
+                            </form>
+                            <button onClick={closeModal}>Close</button>
+                          </Modal>
+                        </div>
+
                         <a href="#" className="card-link">Delete</a>
                     </div>
                     </div>
