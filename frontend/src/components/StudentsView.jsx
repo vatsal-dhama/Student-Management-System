@@ -6,6 +6,7 @@ import { addCart } from "../redux/action";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Link } from "react-router-dom";
+import UpdateCgpa from "./UpdateCgpa";
 
 const Students = () => {
   const [data, setData] = useState([]);
@@ -108,7 +109,7 @@ const Students = () => {
     
   };
 
-  //For updateing cgpa of students
+  //For UPDATE cgpa of students
   const [editcgpa, seteditcgpa] = useState(
     0.0
   );
@@ -133,9 +134,15 @@ const Students = () => {
     }
     axios.post("http://localhost:8070/student/update", payload)
   }
+  const [isComponentVisible, setIsComponentVisible] = useState(false);
+
+  const handleEditButtonClick = () => {
+    // Toggle the state to show/hide the component
+    setIsComponentVisible(!isComponentVisible);
+  };
 
 
-  //For fetching students
+  //For READ students
   useEffect(() => {
     const getStudents = async () => {
       setLoading(true);
@@ -155,22 +162,12 @@ const Students = () => {
     getStudents();
   }, []);
 
-  // State for managing the modal
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Function to open the modal
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  // Function to close the modal
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
 
   //for deleteling
   const handleDelete = (student_id,e) => {
     e.preventDefault();
+    console.log("http://localhost:8070/student/delete?id="+student_id)
     axios.post("http://localhost:8070/student/delete?id="+student_id)
     .then((response) => {
       console.log("deleted successfully!")
@@ -213,58 +210,17 @@ const Students = () => {
                     </ul>
                     <div className="card-body">
                         <a href="#" className="card-link">View</a>
-                        <button className="btn btn-link card-link"  onClick={openModal}>
-                        Edit
+
+                        <button onClick={handleEditButtonClick}>
+                          Edit
                         </button>
-                        <div>
-
-                          <button onClick={openModal}>Edit</button>
-                          <Modal
-                            isOpen={isModalOpen}
-                            onRequestClose={closeModal}
-                            contentLabel="Edit Student Modal"
-                          >
-
-                            <h2>Edit Student</h2>
-                            <div>
-                              <label>Student ID:</label>
-                              <span>{student.student_id}</span>
-                            </div>
-                            <div>
-                              <label>First Name:</label>
-                              <span>{student.firstname}</span>
-                            </div>
-                            <div>
-                              <label>Email:</label>
-                              <span>{student.email}</span>
-                            </div>
-                            <div>
-                              <label>Roll Number:</label>
-                              <span>{student.rollnumber}</span>
-                            </div>
-                            {/* Add your form or any editing components here */}
-                            <form onSubmit={(e) => handlecgpaSubmit(student, e)}>
-                              <div>
-                                <label htmlFor="cgpa">Cgpa:</label>
-                                <input
-                                  type="number"
-                                  id="cgpa"
-                                  name="cgpa"
-                                  value={formData.cgpa}
-                                  onChange={handlecgpaChange}
-                                />
-                              </div>
-
-                              <button type="submit">Save Changes</button>
-                            </form>
-                            <button onClick={closeModal}>Close</button>
-                          </Modal>
-                        </div>
+                        
 
                         <button className="btn btn-link card-link"  onClick={(e) => handleDelete(student.student_id,e)}>
-                        Delete
+                          Delete
                         </button>
                     </div>
+                    {isComponentVisible && <UpdateCgpa value={student} />}
                     </div>
             </div>
           );
