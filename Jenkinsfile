@@ -72,9 +72,9 @@ pipeline {
             steps {
                 echo 'Building frontend Docker image'
                 dir('frontend') {
-                    sh "npm install -g yarn"
-                    sh "yarn"
-                    sh "yarn start"
+                    // sh "npm install -g yarn"
+                    sh "npm install"
+                    sh "npm test"
                 }
             }
         }
