@@ -74,7 +74,7 @@ const Students = () => {
     });
   };
   const handleSubmit = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
 
     if (!batchset) {
       for (let i = 0; i < batches.length; i++) {
