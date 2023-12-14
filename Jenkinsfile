@@ -52,7 +52,7 @@ pipeline {
                 echo 'Build maven project'
                 dir('backend') 
                 {
-                    sleep(time: 10, unit: 'SECONDS')
+                    sleep(time: 20, unit: 'SECONDS')
                     sh 'mvn clean install'
                 }
             }
