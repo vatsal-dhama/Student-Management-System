@@ -186,12 +186,15 @@ const Students = () => {
       <>
         <div className="buttons text-center py-5">
           <button className="btn btn-outline-dark btn-sm m-2" onClick={() => setFilter(data)}>All</button>
-          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterStudent("MT2025")}>MT2025</button>
-          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterStudent("BT2025")}>
-          BT2025
-          </button>
+          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterStudent("MT2020")}>MT2020</button>
+          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterStudent("MT2021")}>MT2021</button>
+          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterStudent("MT2022")}>MT2022</button>
+          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterStudent("MT2023")}>MT2023</button>
 
-          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterStudent("MT2024")}>MT2024</button>
+          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterStudent("IMT2020")}>IMT2020</button>
+          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterStudent("IMT2021")}>IMT2021</button>
+          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterStudent("IMT2022")}>IMT2022</button>
+          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterStudent("IMT2023")}>IMT2023</button>
         </div>
 
         {filter.map((student) => {
