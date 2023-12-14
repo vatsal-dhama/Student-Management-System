@@ -9,11 +9,11 @@ pipeline {
         docker_image = ''
     }
 
-    // //added tool references for mac
-    // tools { 
-    //     maven 'mvn'
-    //     ansible 'ansible'
-    // }
+    //added tool references for mac
+    tools { 
+        maven 'mvn'
+        ansible 'ansible'
+    }
 
     stages{
         stage('Stage 0: Pull MySQL Image') {
@@ -47,15 +47,15 @@ pipeline {
             }
         }
 
-        // stage('stage 3: Build maven project') {
-        //     steps {
-        //         echo 'Build maven project'
-        //         dir('backend') 
-        //         {
-        //             sh 'mvn clean install'
-        //         }
-        //     }
-        // }
+        stage('stage 3: Build maven project') {
+            steps {
+                echo 'Build maven project'
+                dir('backend') 
+                {
+                    sh 'mvn clean install'
+                }
+            }
+        }
  
         stage('Stage 4: Build backend Docker Image') {
             steps {
@@ -68,16 +68,16 @@ pipeline {
             }
         }
 
-        // stage('Stage 5: Testing Frontend') {
-        //     steps {
-        //         echo 'Building frontend Docker image'
-        //         dir('frontend') {
-        //             // sh "npm install -g yarn"
-        //             sh "npm install"
-        //             sh "npm test"
-        //         }
-        //     }
-        // }
+        stage('Stage 5: Testing Frontend') {
+            steps {
+                echo 'Building frontend Docker image'
+                dir('frontend') {
+                    // sh "npm install -g yarn"
+                    sh "npm install"
+                    sh "npm test"
+                }
+            }
+        }
 
         stage('Stage 6: Build frontend Docker image') {
             steps {
