@@ -3,7 +3,8 @@ HELP.md
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-
+spring.log
+spring.log.2023-12-13.0gz
 ### STS ###
 .apt_generated
 .classpath
