@@ -10,10 +10,10 @@ pipeline {
     }
 
     //added tool references for mac
-    tools { 
-        maven 'mvn'
-        ansible 'ansible'
-    }
+    // tools { 
+    //     maven 'mvn'
+    //     ansible 'ansible'
+    // }
 
     stages{
         stage('Stage 0: Pull MySQL Image') {
@@ -52,6 +52,7 @@ pipeline {
                 echo 'Build maven project'
                 dir('backend') 
                 {
+                    sleep(time: 10, unit: 'SECONDS')
                     sh 'mvn clean install'
                 }
             }
