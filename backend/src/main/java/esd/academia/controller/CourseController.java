@@ -3,10 +3,6 @@ package esd.academia.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,8 +24,6 @@ import esd.academia.service.CourseService;
 public class CourseController {
 	
 	private CourseService courseService;
-	private static final Logger LOG = LogManager.getLogger(CourseController.class);
-
 	public CourseController(CourseService courseService) {
 		super();
 		this.courseService = courseService;
@@ -40,7 +34,6 @@ public class CourseController {
 		List<Course> courses = null;
 		HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-		// LOG.log(Level.INFO, "GetAllCourses Triggered");
 		try {
 			courses = this.courseService.getAllCourses();
 			return ResponseEntity
