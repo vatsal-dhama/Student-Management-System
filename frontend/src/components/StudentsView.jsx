@@ -74,18 +74,35 @@ const Students = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (!batchset) {
       for (let i = 0; i < batches.length; i++) {
         axios.post("http://localhost:8070/utils/addBatch", batches[i])
-        console.log("hel");
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          if(error.response.status == 400){
+            console.log("already batch is added");
+          }
+          else{
+            console.log("other error when adding batch");
+          }
+        })
       }
       setBatchset(true);    
     }
 
 
+
+
     axios.post("http://localhost:8070/student/add", formData)
     .then((response)=>{
       console.log(response)
+    })
+    .catch((error) => {
+      console.log(error.response.status)
+      console.log("student already added or else batch is invalid");
     })
     console.log('Form submitted:', formData);
     
@@ -151,9 +168,17 @@ const Students = () => {
     setIsModalOpen(false);
   };
 
-  const handleEditSubmit = () => {
-
-  };
+  //for deleteling
+  const handleDelete = (student_id,e) => {
+    e.preventDefault();
+    axios.post("http://localhost:8070/student/delete?id="+student_id)
+    .then((response) => {
+      console.log("deleted successfully!")
+    })
+    .catch((error) => {
+      console.log("no student with this id found")
+    })
+  }
 
   const filterStudent = (batch) => {
     const updatedList = data.filter((item) => item.s_batch_code.batch_id===batch );
@@ -236,7 +261,9 @@ const Students = () => {
                           </Modal>
                         </div>
 
-                        <a href="#" className="card-link">Delete</a>
+                        <button className="btn btn-link card-link"  onClick={(e) => handleDelete(student.student_id,e)}>
+                        Delete
+                        </button>
                     </div>
                     </div>
             </div>
