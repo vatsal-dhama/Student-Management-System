@@ -168,7 +168,7 @@ const Students = () => {
   const handleDelete = (student_id,e) => {
     e.preventDefault();
     console.log("http://localhost:8070/student/delete?id="+student_id)
-    axios.post("http://localhost:8070/student/delete?id="+student_id)
+    axios.delete("http://localhost:8070/student/delete?id="+student_id)
     .then((response) => {
       console.log("deleted successfully!")
     })
