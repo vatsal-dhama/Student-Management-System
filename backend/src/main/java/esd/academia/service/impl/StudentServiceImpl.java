@@ -44,4 +44,16 @@ public class StudentServiceImpl implements StudentService {
 		return retrievedStudent;
 	}
 
+	@Override
+	public Student deleteStudentById(long id) {
+		Student retrievedSudent = null;
+		Optional<Student> s = getStudentById(id);
+		if(s.isPresent()) {
+			retrievedSudent = s.get();
+			studentRepo.deleteById(id);
+		}
+
+		return retrievedSudent;
+	}
+
 }

@@ -40,7 +40,7 @@ public class CourseController {
 		List<Course> courses = null;
 		HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-		LOG.log(Level.INFO, "GetAllCourses Triggered");
+		// LOG.log(Level.INFO, "GetAllCourses Triggered");
 		try {
 			courses = this.courseService.getAllCourses();
 			return ResponseEntity
