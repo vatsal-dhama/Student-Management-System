@@ -1,5 +1,6 @@
 HELP.md
 /target
+myApp.log
 spring.log
 spring.log.2023-12-13.0.gz
 !.mvn/wrapper/maven-wrapper.jar
